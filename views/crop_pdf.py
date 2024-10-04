@@ -7,16 +7,23 @@ from PyPDF2 import PdfWriter, PdfReader
 def create_page():
 
     st.title("Let's Crop PDF")
+    pdf_name_in = "original.pdf"
+    pdf_name_out = "crop.pdf"
+    
 
     uploaded_file = st.file_uploader(
         label="Choose a PDF file", accept_multiple_files=False, type=["pdf"]
     )
     if uploaded_file:
-        pdf_reader = PdfReader(uploaded_file.name)
+        pdf_writer = PdfWriter()
+        pdf_writer.append(uploaded_file)
+        pdf_writer.write(pdf_name_in)
+        pdf_writer.close()
+        pdf_reader = PdfReader(pdf_name_in)
         pdf0 = pdf_reader.pages[0]
         pdf_box = pdf0.mediabox
         
-        images = convert_from_path(uploaded_file.name)
+        images = convert_from_path(pdf_name_in)
         for i, image in enumerate(images):
             image.thumbnail((pdf_box.width, pdf_box.height))
             image.save(f'page{i}.jpg', 'JPEG')
@@ -27,7 +34,7 @@ def create_page():
             st.write('')
         else:
             if st.button('Crop'):
-                reader = PdfReader(uploaded_file.name)
+                reader = PdfReader(pdf_name_in)
                 writer = PdfWriter()
                 page0 = reader.pages[0]
                 
@@ -41,10 +48,10 @@ def create_page():
                 page0.cropbox.lower_right = new_lower_right
                 
                 writer.add_page(page0)
-                writer.write("crop-pdf.pdf")
+                writer.write(pdf_name_out)
                 writer.close()
 
-                with open("crop-pdf.pdf", "rb") as pdf_file:    
+                with open(pdf_name_out, "rb") as pdf_file:    
                     PDFbyte = pdf_file.read()
                 st.write("Complete crop. Let's Download")
                 st.download_button(label="Download PDF", data=PDFbyte, file_name="crop-pdf.pdf", mime='application/octet-stream')
