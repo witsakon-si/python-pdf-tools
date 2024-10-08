@@ -13,11 +13,12 @@ def create_page():
     )
 
     if uploaded_file:
-        aspect_choice = st.radio(label="Aspect Ratio", options=["1:1", "16:9", "4:3", "2:3", "Free"], horizontal=True)
+        aspect_choice = st.radio(label="Aspect Ratio", options=["1:1", "16:9", "4:3", "3:4", "2:3", "Free"], horizontal=True)
         aspect_dict = {
             "1:1": (1, 1),
             "16:9": (16, 9),
             "4:3": (4, 3),
+            "3:4": (3, 4),
             "2:3": (2, 3),
             "Free": None
         }
