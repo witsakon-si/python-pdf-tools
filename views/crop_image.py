@@ -35,16 +35,16 @@ def create_page():
             byte_im = buf.getvalue()
             file_name = "crop-" + uploaded_file.name
             
-            # wepb
-            buf_wepb = BytesIO()
-            cropped_img.save(buf_wepb, format="webp", optimize=True, quality=80)
-            byte_wepb = buf_wepb.getvalue()
-            file_name_wepb = "crop-" + uploaded_file.name + ".wepb"
-            file_name_wepb = file_name_wepb.replace(".png", "")
-            file_name_wepb = file_name_wepb.replace(".jpg", "")
-            file_name_wepb = file_name_wepb.replace(".jpeg", "")
+            # webp
+            buf_webp = BytesIO()
+            cropped_img.save(buf_webp, format="webp", optimize=True, quality=80)
+            byte_webp = buf_webp.getvalue()
+            file_name_webp = "crop-" + uploaded_file.name + ".webp"
+            file_name_webp = file_name_webp.replace(".png", "")
+            file_name_webp = file_name_webp.replace(".jpg", "")
+            file_name_webp = file_name_webp.replace(".jpeg", "")
             
             
             st.download_button(label="Download (Original Type)", data=byte_im, file_name=file_name, mime=img_mine)
-            st.download_button(label="Download (.wepb)", data=byte_wepb, file_name=file_name_wepb, mime="image/webp")
+            st.download_button(label="Download (.webp)", data=byte_webp, file_name=file_name_webp, mime="image/webp")
         
