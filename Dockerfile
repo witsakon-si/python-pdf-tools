@@ -9,7 +9,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir -r packages.txt
 
 COPY main.py /app/
-COPY views /app/
+COPY views /app/views/
 
 EXPOSE 8501
 
